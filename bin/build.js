@@ -20,14 +20,6 @@ var options = require("./convert-argv")(optimist, argv);
 
 
 function processOptions(options) {
-  // process Promise
-  if (typeof options.then === "function") {
-    options.then(processOptions).catch(function (err) {
-      console.error(err.stack || err);
-      process.exit(); // eslint-disable-line
-    });
-    return;
-  }
 
   var sfpack = require("../index.js");
 

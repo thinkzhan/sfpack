@@ -7,4 +7,5 @@ module.exports = function(optimist) {
 		.string("dist").describe("dist")
 		.string("publicPath").alias("publicPath", "p").describe("publicPath")
 		.boolean("watch").describe("watch  false")
+		.boolean("compress").describe("compress  false")
 };

@@ -12,6 +12,9 @@
 
 `npm i -g sfpack -g`
 
+### 初始化一个sfpack项目
+`sfpack --init=demo`
+
 ### 配置文件使用
 `sfpack  --config=./sfpack.config`
 
@@ -22,6 +25,7 @@ module.exports = {
     entry: ['./page1', './page2'],
     dist: './dist',
     publicPath: './',
+    compress: false, // default: false 不压缩静态
     watch: true, // default: false 源码修改不自动构建
     devServer: { // http://www.browsersync.cn/docs/options/
         server: {
