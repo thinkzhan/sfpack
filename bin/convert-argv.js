@@ -35,7 +35,7 @@ module.exports = function (optimist, argv, convertOptions) {
       console.log("Config did not export an object.");
       process.exit(-1); // eslint-disable-line
     }
-    
+
     // process ES6 default
     if (typeof options === "object" && typeof options["default"] === "object") {
       return processConfiguredOptions(options["default"]);
@@ -65,7 +65,7 @@ module.exports = function (optimist, argv, convertOptions) {
 
     options.dist = options.dist || argv['dist'] || '';
     options.publicPath = options.publicPath || argv['publicPath'] || '';
-    options.watch = options.watch || argv['watch'] || false;
     options.compress = options.compress || argv['compress'] || false;
+    options.hash = options.hash || argv['hash'] || false;
   }
 };

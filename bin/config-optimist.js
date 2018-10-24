@@ -6,6 +6,6 @@ module.exports = function(optimist) {
 		.string("entry").describe("entry")
 		.string("dist").describe("dist")
 		.string("publicPath").alias("publicPath", "p").describe("publicPath")
-		.boolean("watch").describe("watch  false")
 		.boolean("compress").describe("compress  false")
+		.boolean("hash").describe("hash  false")
 };

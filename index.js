@@ -4,14 +4,14 @@ const global = require("./lib/help/global");
 
 module.exports = function (options) {
   let {
-      watch = false
+      devServer = false
   } = options
 
   global.config = options;
 
   pack(options)
 
-  if (watch) {
+  if (!!devServer) {
       watcher(options)
   }
 }

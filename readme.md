@@ -10,13 +10,19 @@
 
 ## 用法
 
-`npm i -g sfpack -g`
+```bash
+npm i -g sfpack -g
+```
 
-### 初始化一个sfpack项目
-`sfpack --init=demo`
+### 初始化sfpack项目
+```bash
+sfpack --init=demo
+```
 
-### 配置文件使用
-`sfpack  --config=./sfpack.config`
+### 配置文件方式
+```bash
+sfpack  --config=./sfpack.config
+```
 
 默认在当前目录寻找`sfpack.config.js`文件
 
@@ -26,7 +32,7 @@ module.exports = {
     dist: './dist',
     publicPath: './',
     compress: false, // default: false 不压缩静态
-    watch: true, // default: false 源码修改不自动构建
+    hash: false, // default: false 静态不打版本
     devServer: { // http://www.browsersync.cn/docs/options/
         server: {
             baseDir: './dist'
@@ -36,7 +42,7 @@ module.exports = {
 }
 ```
 
-### 命令行打包
+### 命令行方式
 `sfpack  --entry=./page1 --publicPath=dist`
 
 ## 目录要求
@@ -51,6 +57,7 @@ module.exports = {
         -index.scss
    -index.html
 ```
+
 ## 模块化
 
 依赖module模块：
