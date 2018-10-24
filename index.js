@@ -1,5 +1,5 @@
 const pack = require('./lib/pack');
-const watcher = require("./lib/watcher");
+const watcher = require("./lib/dev/watcher");
 
 module.exports = function (options) {
   let {

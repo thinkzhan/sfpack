@@ -1,4 +1,4 @@
 .DS_Store
 node_modules/
-test/dist/
+example/dist/
 package-lock.json

@@ -1,9 +1,9 @@
 {
   "name": "sfpack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a module compiler",
   "bin": {
-    "sfproxy": "./bin/build.js"
+    "sfpack": "./bin/build.js"
   },
   "main": "index.js",
   "scripts": {
@@ -11,14 +11,19 @@
   },
   "author": "thinkzhan",
   "license": "ISC",
-  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liberalist1991/sfpack.git"
+  },
   "dependencies": {
+    "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-traverse": "^6.26.0",
     "babylon": "^6.18.0",
     "browser-sync": "^2.26.3",
     "fs-extended": "^0.2.1",
     "htmlparser2": "^3.10.0",
+    "interpret": "^1.1.0",
     "node-sass": "^4.9.4",
     "optimist": "^0.6.1",
     "sfconsole": "0.0.6",

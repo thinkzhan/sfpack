@@ -1,8 +1,9 @@
 var path = require("path");
 var fs = require("fs");
-fs.existsSync = fs.existsSync || path.existsSync;
-var resolve = require("enhanced-resolve");
 var interpret = require("interpret");
+var initTemplate = require("./initTemplate");
+
+fs.existsSync = fs.existsSync || path.existsSync;
 
 module.exports = function (optimist, argv, convertOptions) {
 
@@ -11,6 +12,14 @@ module.exports = function (optimist, argv, convertOptions) {
   // Help
   if (argv.help) {
     optimist.showHelp();
+    process.exit(-1); // eslint-disable-line
+  }
+  if (argv.hasOwnProperty('init')) {
+    if (argv.init === '') {
+        console.log("Input a specfic path or name");
+    } else {
+        initTemplate(argv.init)
+    }
     process.exit(-1); // eslint-disable-line
   }
 
@@ -33,10 +42,10 @@ module.exports = function (optimist, argv, convertOptions) {
     }
   } else {
     for (var i = 0; i < extensions.length; i++) {
-      var webpackConfig = path.resolve("sfpack.config" + extensions[i]);
-      if (fs.existsSync(webpackConfig)) {
+      var sfpackConfig = path.resolve("sfpack.config" + extensions[i]);
+      if (fs.existsSync(sfpackConfig)) {
         ext = extensions[i];
-        configPath = webpackConfig;
+        configPath = sfpackConfig;
         break;
       }
     }
@@ -104,7 +113,7 @@ module.exports = function (optimist, argv, convertOptions) {
     }
 
     if (!Array.isArray(options.entry)) {
-        options.entry = [options.entry]
+      options.entry = [options.entry]
     }
 
     options.publicPath = options.publicPath || argv['publicPath'] || '';
