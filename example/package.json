@@ -5,7 +5,5 @@
     "dev": "sfpack --config=./build/sfpack.dev.config",
     "build": "sfpack --config=./build/sfpack.prod.config"
   },
-  "devDependencies": {
-    "babel-preset-env": "^1.7.0"
-  }
+  "devDependencies": {}
 }

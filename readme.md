@@ -4,9 +4,11 @@
 
 1. 完全的模块化构建
 2. 静态依赖自动解析
-3. 支持es6、sass
+3. 默认支持es6、sass
 4. 支持多页构建
-5. 浏览器自动刷新
+5. 支持静态压缩、版本hash
+6. 浏览器自动刷新
+7. 项目模版cli
 
 ## 用法
 
@@ -14,12 +16,20 @@
 npm i -g sfpack -g
 ```
 
-### 初始化sfpack项目
+### 开始一个sfpack项目
 ```bash
 sfpack --init=demo
+
+cd demo
+
+npm run dev
 ```
 
-### 配置文件方式
+默认已经支持sass和基础es6语法，如果不满足需求可以自定义`.babelrc`
+
+理论上开箱即可开发
+
+### 打包：配置文件方式
 ```bash
 sfpack  --config=./sfpack.config
 ```
@@ -42,7 +52,7 @@ module.exports = {
 }
 ```
 
-### 命令行方式
+### 打包：命令行方式
 `sfpack  --entry=./page1 --publicPath=dist`
 
 ## 目录要求
@@ -69,3 +79,7 @@ module.exports = {
 效果：
 1. 引入 `./module/index.html`
 2. `./module/index.js`和 `./module/index.scs`若存在会自动被解析引入
+
+! 自定义js依赖时请显示体现js后缀
+
+如：`require('./other.js')`而非`require('./other')`

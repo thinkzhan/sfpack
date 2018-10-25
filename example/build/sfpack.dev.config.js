@@ -5,7 +5,6 @@ module.exports = {
   ],
   dist: './dist',
   publicPath: './',
-  hash: true,
   // http://www.browsersync.cn/docs/options/
   devServer: {
     server: {
