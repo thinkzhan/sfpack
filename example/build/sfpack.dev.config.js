@@ -1,15 +1,9 @@
 module.exports = {
   entry: [
-    './src/page1',
-    './src/page2'
+    './page1',
+    './page2',
+    './page3'
   ],
-  dist: './dist',
-  publicPath: './',
-  // http://www.browsersync.cn/docs/options/
-  devServer: {
-    server: {
-      baseDir: './dist'
-    },
-    port: 3001
-  }
+  devServer: true
 }
+// 其他配置参考sfpack/readme.md

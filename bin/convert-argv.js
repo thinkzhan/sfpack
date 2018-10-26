@@ -63,7 +63,7 @@ module.exports = function (optimist, argv, convertOptions) {
       options.entry = [options.entry]
     }
 
-    options.dist = options.dist || argv['dist'] || '';
+    options.dist = options.dist || argv['dist'] || './dist';
     options.publicPath = options.publicPath || argv['publicPath'] || '';
     options.compress = options.compress || argv['compress'] || false;
     options.hash = options.hash || argv['hash'] || false;
