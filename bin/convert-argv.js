@@ -52,8 +52,9 @@ module.exports = function (optimist, argv, convertOptions) {
 
   function processOptions(options) {
     options.entry = options.entry || argv['entry'];
+    options.entryDir = options.entryDir || argv['entryDir'];
 
-    if (!options.entry) {
+    if (!options.entry && !options.entryDir) {
       optimist.showHelp();
       console.error("entry not configured.");
       process.exit(-1); // eslint-disable-line
@@ -63,9 +64,10 @@ module.exports = function (optimist, argv, convertOptions) {
       options.entry = [options.entry]
     }
 
-    options.dist = options.dist || argv['dist'] || './dist';
-    options.publicPath = options.publicPath || argv['publicPath'] || '';
-    options.compress = options.compress || argv['compress'] || false;
-    options.hash = options.hash || argv['hash'] || false;
+    options.dist = options.dist || argv['dist'];
+    options.publicPath = options.publicPath || argv['publicPath'];
+    options.compress = options.compress || argv['compress'];
+    options.hash = options.hash || argv['hash'];
+    options.devServer = options.devServer || argv['devServer'];
   }
 };

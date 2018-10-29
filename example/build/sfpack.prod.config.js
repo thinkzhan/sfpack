@@ -1,8 +1,8 @@
 module.exports = {
   entry: [
-    './page1',
-    './page2',
-    './page3'
+    './src/page1',
+    './src/page2',
+    './src/page3'
   ],
   compress: true,
   hash: true,

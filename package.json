@@ -1,6 +1,6 @@
 {
   "name": "sfpack",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "a module compiler",
   "bin": {
     "sfpack": "./bin/build.js"
