@@ -98,10 +98,15 @@ plugins: {
 
 `sfpack  --entry=./page1 --publicPath=dist`
 
-## 目录要求
+## 模块
 
-参考`example`
+参考`example/src/page1`
 
+依赖module模块：
+
+```html
+<module src="./module"/>
+```
     -page
         -module
             -img
@@ -110,13 +115,6 @@ plugins: {
             -index.scss
        -index.html
 
-## 模块化
-
-依赖module模块：
-
-```html
-<module src="./module"/>
-```
 
 效果：
 1\. 引入 `./module/index.html`
@@ -125,3 +123,27 @@ plugins: {
 ! 自定义js依赖时请显示体现js后缀
 
 如：`require('./other.js')`而非`require('./other')`
+
+### 单文件模块
+
+参考`example/src/page2`
+
+```html
+<module src="./module-sfc.html"/>
+```
+
+```html
+<template>
+      <div class="m-sfc">
+        ...
+      </div>
+</template>
+
+<script>
+      console.log('sfc形式...')
+</script>
+
+<style>
+      .m-sfc {}
+</style>
+```
