@@ -1,10 +1,10 @@
 {
-  "name": "demo",
-  "description": "sfpack demo",
-  "scripts": {
-    "dev": "sfpack --config=./build/sfpack.dev.config",
-    "build": "sfpack --config=./build/sfpack.prod.config"
-  },
-  "devDependencies": {},
-  "dependencies": {}
+    "name": "demo",
+    "description": "sfpack demo",
+    "scripts": {
+        "dev": "sfpack --config=./build/sfpack.dev.config",
+        "build": "sfpack --config=./build/sfpack.prod.config"
+    },
+    "devDependencies": {},
+    "dependencies": {}
 }

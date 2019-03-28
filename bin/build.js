@@ -9,22 +9,19 @@ var path = require("path");
 // 	}
 // } catch(e) {}
 
-var optimist = require("optimist")
-  .usage("sfpack " + require("../package.json").version);
+var optimist = require("optimist").usage(
+    "sfpack " + require("../package.json").version
+);
 
 require("./config-optimist")(optimist);
-
 var argv = optimist.argv;
 
 var options = require("./convert-argv")(optimist, argv);
 
-
 function processOptions(options) {
+    var sfpack = require("../index.js");
 
-  var sfpack = require("../index.js");
-
-  var compiler = sfpack(options);
-
+    var compiler = sfpack(options);
 }
 
 processOptions(options);

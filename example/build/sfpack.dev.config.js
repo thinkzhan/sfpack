@@ -1,13 +1,10 @@
-
 module.exports = {
-  entry: [
-    './src/page1',
-    './src/page2',
-    './src/page3'
-  ],
+    // entry: ["./src/page1", "./src/page2", "./src/page3"],
 
-  // entryDir: './src',
+    // inline: ["./src/page2", "./src/test_vue"],
 
-  devServer: true
-}
+    entryDir: "./src",
+
+    devServer: true
+};
 // 其他配置参考sfpack/readme.md

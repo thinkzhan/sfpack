@@ -1,40 +1,38 @@
 {
-  "name": "sfpack",
-  "version": "0.2.0",
-  "description": "a module compiler",
-  "bin": {
-    "sfpack": "./bin/build.js"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test": "cd example && node ../bin/build --config=./build/sfpack.dev.config"
-  },
-  "author": "thinkzhan",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/liberalist1991/sfpack.git"
-  },
-  "keywords": [
-    "pack",
-    "bundle",
-    "module"
-  ],
-  "dependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/parser": "^7.1.3",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/traverse": "^7.1.4",
-    "browser-sync": "^2.26.3",
-    "clean-css": "^4.2.1",
-    "fs-extended": "^0.2.1",
-    "hash-sum": "^1.0.2",
-    "htmlparser2": "^3.10.0",
-    "node-sass": "^4.9.4",
-    "optimist": "^0.6.1",
-    "sfconsole": "0.0.6",
-    "shelljs": "^0.8.2",
-    "uglify-js": "^3.4.9",
-    "watchpack": "^1.6.0"
-  }
+    "name": "sfpack",
+    "version": "0.2.2",
+    "description": "a module compiler",
+    "bin": {
+        "sfpack": "./bin/build.js"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "cd example && node ../bin/build --config=./build/sfpack.dev.config",
+        "test-vue": "node ./bin/build-vue"
+    },
+    "author": "thinkzhan",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/liberalist1991/sfpack.git"
+    },
+    "keywords": ["pack", "bundle", "module"],
+    "dependencies": {
+        "@babel/core": "^7.1.2",
+        "@babel/parser": "^7.1.3",
+        "@babel/preset-env": "^7.1.0",
+        "@babel/traverse": "^7.1.4",
+        "browser-sync": "^2.26.3",
+        "clean-css": "^4.2.1",
+        "fs-extended": "^0.2.1",
+        "hash-sum": "^1.0.2",
+        "htmlparser2": "^3.10.0",
+        "node-sass": "^4.9.4",
+        "optimist": "^0.6.1",
+        "sfconsole": "0.0.6",
+        "shelljs": "^0.8.2",
+        "uglify-js": "^3.4.9",
+        "watchpack": "^1.6.0",
+        "vinyl": "^2.2.0"
+    }
 }
