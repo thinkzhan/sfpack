@@ -1,6 +1,6 @@
-var path = require("path");
-var fs = require("fs");
-var initTemplate = require("./initTemplate");
+var path = require('path');
+var fs = require('fs');
+var initTemplate = require('./initTemplate');
 
 fs.existsSync = fs.existsSync || path.existsSync;
 
@@ -15,7 +15,7 @@ module.exports = function (optimist, argv, convertOptions) {
   }
   if (argv.hasOwnProperty('init')) {
     if (argv.init === '') {
-      console.log("Input a specfic path or name");
+      console.log('Input a specfic path or name');
     } else {
       initTemplate(argv.init)
     }
@@ -31,14 +31,14 @@ module.exports = function (optimist, argv, convertOptions) {
   return processConfiguredOptions(options);
 
   function processConfiguredOptions(options) {
-    if (typeof options !== "object" || options === null) {
-      console.log("Config did not export an object.");
+    if (typeof options !== 'object' || options === null) {
+      console.log('Config did not export an object.');
       process.exit(-1); // eslint-disable-line
     }
 
     // process ES6 default
-    if (typeof options === "object" && typeof options["default"] === "object") {
-      return processConfiguredOptions(options["default"]);
+    if (typeof options === 'object' && typeof options['default'] === 'object') {
+      return processConfiguredOptions(options['default']);
     }
 
     if (Array.isArray(options)) {
@@ -56,7 +56,7 @@ module.exports = function (optimist, argv, convertOptions) {
 
     if (!options.entry && !options.entryDir) {
       optimist.showHelp();
-      console.error("entry not configured.");
+      console.error('entry not configured.');
       process.exit(-1); // eslint-disable-line
     }
 

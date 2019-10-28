@@ -1,19 +1,22 @@
-const fs = require("fs");
-const { pack } = require("./lib/pack");
-const watcher = require("./lib/dev/watcher");
-const plugin = require("./lib/help/plugin");
-const Global = require("./lib/help/global");
-const { extend } = require("./lib/help/util");
+import fs from "fs";
+import watcher from "./lib/dev/watcher";
+// import plugin from "./lib/help/plugin";
+import global from "./lib/global";
+import extend from "./lib/help/extend";
+import { pack } from "./lib/pack";
+import plugin from "./lib/plugin/register";
+import "./lib/plugin/registerInner";
 
-module.exports = function(options) {
+export default function(options) {
     const dftOptions = {
-        entryDir: null,
-        entry: null,
+        entryDir: null, // 入口目录 字符串
+        entry: null,    // 入口文件 数组
         dist: "./dist",
-        publicPath: "",
+        publicPath: "/",
         compress: false,
         hash: false,
         devServer: false,
+        base64: 2048,
         plugins: {}
     };
     options = extend(dftOptions, options);
@@ -24,13 +27,10 @@ module.exports = function(options) {
             return options.entryDir + "/" + page;
         });
     }
-
-    Global.config = options;
-
+    
+    global.config = options;
     plugin(options.plugins);
-
     pack(options);
-
     if (!!options.devServer) {
         watcher(options);
     }

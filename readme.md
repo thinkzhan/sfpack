@@ -1,4 +1,4 @@
-# sfpack
+# pack
 
 ## 场景
 
@@ -17,6 +17,7 @@
 5.  支持静态压缩、版本 hash
 6.  浏览器自动刷新
 7.  项目模版 cli
+8.  支持资源内联
 
 甚至支持构建`Vue sfc`项目！
 
@@ -43,10 +44,10 @@ npm run dev
 ### 打包：配置文件方式
 
 ```bash
-sfpack  --config=./sfpack.config
+sfpack --config=./pack.config
 ```
 
-默认在当前目录寻找`sfpack.config.js`文件
+默认在当前目录寻找`pack.config.js`文件
 
 ```javascript
 module.exports = {
@@ -72,15 +73,15 @@ module.exports = {
 
 ```javascript
 plugins: {
-  ['AFTER_HTML_MERGE'](complier) {
-    console.log(complier.compilationPage + ' is compilation....');
+  ['AFTER_MERGE_HTML'](complier) {
+    console.log(complier.page + ' is compilation....');
   },
-  'AFTER_SCRIPT_MERGE': [complier => {
+  'AFTER_MERGE_SCRIPT': [complier => {
     complier.compilation.script = 'console.log("replaced...")'
   }, complier => {
     complier.compilation.script += ';console.log("顺序执行...")'
   }],
-  ['AFTER_STYLE_MERGE'](complier) {
+  ['AFTER_MERGE_STYLE'](complier) {
     complier.compilation.style = `
       * {
           font-size: 20px
@@ -92,11 +93,9 @@ plugins: {
 
 事件列表
 
--   `AFTER_HTML_MERGE`: html 资源合并后
--   `AFTER_SCRIPT_MERGE`: js 资源合并后, 压缩前
--   `AFTER_STYLE_MERGE`: css 资源合并后, 压缩前
-
-为了简化，只提供了以上三种干预资源的钩子，但已足够处理比如：针对特定页面做模版渲染或者压缩页面 这种工作
+-   `AFTER_MERGE_HTML`: html 资源合并后
+-   `AFTER_MERGE_SCRIPT`: js 资源合并后
+-   `AFTER_MERGE_STYLE`: css 资源合并后
 
 ### 打包：命令行方式打包单页面
 
@@ -106,67 +105,20 @@ plugins: {
 
 参考`example/src/page1`
 
-依赖 module 模块：
+依赖 component 模块：
 
 ```html
-<module src="./module"/>
+<component src="./component"/>
 ```
 
     -page
-        -module
-            -img
+        -component
             -index.html
             -index.js
             -index.scss
        -index.html
 
 效果：
-1\. 引入 `./module/index.html`
-2\. `./module/index.js`和 `./module/index.scs`若存在会自动被解析引入
+1\. 引入 `./component/index.html`
+2\. `./component/index.js`和 `./component/index.scss`若存在会自动被解析引入
 
-! 自定义 js 依赖时请显示体现 js 后缀
-
-如：`require('./other.js')`而非`require('./other')`
-
-### 单文件模块
-
-参考`example/src/page2`
-
-```html
-<module src="./module-sfc.html"/>
-```
-
-```html
-<template>
-      <div class="m-sfc">
-        ...
-      </div>
-</template>
-
-<script>
-      console.log('sfc形式...')
-</script>
-
-<style>
-      .m-sfc {}
-</style>
-```
-
-### Vue
-
-约定只要 page 以`_vue`为后缀，就会自动以 vue 方式构建。且组件自动声明式注入
-
-参考`example/src/test_vue`
-
-```html
-<html>
-<head>
-</head>
-<body>
-  <div id="app">
-      <vue-test></vue-test>
-      <vue-test1></vue-test1>
-  </div>
-</body>
-</html>
-```

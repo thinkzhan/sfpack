@@ -2,9 +2,11 @@
     "name": "demo",
     "description": "sfpack demo",
     "scripts": {
-        "dev": "sfpack --config=./build/sfpack.dev.config",
-        "build": "sfpack --config=./build/sfpack.prod.config"
+        "dev": "sfpack --config=./build/pack.dev.config",
+        "build": "sfpack --config=./build/pack.prod.config"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "jquery": "^3.4.1"
+    },
     "dependencies": {}
 }
