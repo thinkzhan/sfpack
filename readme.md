@@ -1,4 +1,4 @@
-# pack
+# sfpack
 
 ## 场景
 
@@ -16,8 +16,9 @@
 4.  支持多页构建
 5.  支持静态压缩、版本 hash
 6.  浏览器自动刷新
-7.  项目模版 cli
-8.  支持资源内联
+7.  支持资源内联
+9.  支持sfc方式
+10. 项目模版 cli
 
 甚至支持构建`Vue sfc`项目！
 
@@ -122,3 +123,21 @@ plugins: {
 1\. 引入 `./component/index.html`
 2\. `./component/index.js`和 `./component/index.scss`若存在会自动被解析引入
 
+### 单文件模块
+sfc形式文件引入方式同普通模块，会被自动解析
+
+```html
+<template>
+      <div class="m-sfc">
+        ...
+      </div>
+</template>
+
+<script>
+      console.log('sfc形式...')
+</script>
+
+<style>
+      .m-sfc {}
+</style>
+```

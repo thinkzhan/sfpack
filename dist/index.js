@@ -69,6 +69,10 @@ function isHtmlImg(tagName, tagAttr) {
     return tagName === 'img' && isRelative(tagAttr.src);
 }
 
+function isInlineRes(tagName, tagAttr) {
+    return ['template', 'script', 'style'].includes(tagName) && !(tagAttr && tagAttr.hasOwnProperty('src'));
+}
+
 function fileExists(filePath){
     try {
         return fs.statSync(filePath).isFile();
@@ -124,24 +128,33 @@ function findNodeModule(filename) {
     );
 }
 
-var htmlParser = modulePath => {
+var htmlParser = ( modulePath, isEntry )=> {
     const deps = global.compilation.dependencies;
     let code = findCode(modulePath, 'html');
-    
-    const domHandler = {
+    const webCompStarts = {};
+    const webComp = {
+        'template': code,
+        'script': '',
+        'style': ''
+    };
+
+    const parser = new htmlparser2.Parser({
         onopentag(tagName, tagAttr) {
             if (isComponent(tagName, tagAttr) && !deps.includes(tagAttr.src)) {
                 deps.push(tagAttr.src);
                 // not auto load module script
                 if (tagAttr.loadscript === 'false') {
                     global.compilation.ignoreScripts.push(tagAttr.src);
-                }    
+                }
+            } else if (!isEntry && isInlineRes(tagName, tagAttr)) {
+                // parse inline
+                webCompStarts[tagName] = parser.endIndex + 1;
             } else if (isHtmlImg(tagName, tagAttr)) {
-                const source = findImg(path.resolve(modulePath, tagAttr.src)); 
-                code = code.replace(
+                const source = findImg(path.resolve(modulePath, tagAttr.src));
+                webComp['template'] = code.replace(
                     /(\<img\s*src\=)('|")(.*)(\2.*)/g,
                     ($, $1, $2, $3, $4) => {
-                         // limit base64
+                        // limit base64
                         if (global.config.base64 > source.length) {
                             return $1 + $2 + `data:${mime.getType($3) || ''};base64,` + source.toString('base64') + $4
                         } else {
@@ -151,26 +164,37 @@ var htmlParser = modulePath => {
                                 path.resolve(global.config.dist, output),
                                 source
                             );
-                            return  $1 + $2 + url.resolve(global.config.publicPath, output) + $4
+                            return $1 + $2 + url.resolve(global.config.publicPath, output) + $4
                         }
                     }
                 );
             }
+        },
+        onclosetag(tagName) {
+            if (!isEntry && isInlineRes(tagName) && webCompStarts[tagName] >= 0) {
+                // parse inline
+                webComp[tagName] = code.substring(
+                    webCompStarts[tagName],
+                    parser.startIndex
+                );
+            }
+            delete webCompStarts[tagName];
         }
-    };
-
-    const parser = new htmlparser2.Parser(domHandler, {
+    }, {
         decodeEntities: true,
         recognizeSelfClosing: true
     });
-    parser.write(code);
+    parser.write(webComp['template']);
     parser.end();
 
-    return code
+    return webComp
 };
 
-var styleParser = modulePath => {
-    let code = findCode(modulePath, 'scss');
+var styleParser = (modulePath, inlineCode = '') => {
+    let code = inlineCode;
+    if (!inlineCode) {
+        code = findCode(modulePath, 'scss');
+    }
     code = code.replace(
         /(url\(\s*)('|")((?:(?!http\:\/\/|https\:\/\/|\/\/).)+)(\2.*)/g,
         ($, $1, $2, $3, $4) => {
@@ -203,11 +227,14 @@ function sassTransform(code, modulePath) {
     }).css.toString();
 }
 
-var scriptParser = modulePath => {
-    let code = findCode(modulePath, 'js');
- 
-    if (!isRelative(modulePath)) {
-        return code
+var scriptParser = (modulePath, inlineCode) => {
+    let code = inlineCode;
+    if (!code) {
+        code = findCode(modulePath, 'js');
+        // node_module don't parse
+        if (!isRelative(modulePath)) {
+            return code
+        }
     }
     code = babelTransform(code, modulePath);
     code =  babelTraverse(code);
@@ -255,10 +282,10 @@ function babelTraverse(code) {
     return code
 }
 
-function getDep(modulePath) {
-    const html = htmlParser(modulePath);
-    const script = scriptParser(modulePath);
-    const style = styleParser(modulePath);
+function getDep(modulePath, isEntry) {
+    const { template : html, script : inlineScript, style : inlineStyle} = htmlParser(modulePath, isEntry);
+    const script = scriptParser(modulePath, inlineScript);
+    const style = styleParser(modulePath, inlineStyle);
     const dependencies = [ ...global.compilation.dependencies ];
     // recollect
     global.compilation.dependencies = [];
@@ -277,7 +304,7 @@ function getDep(modulePath) {
 }
 
 function getDepQueue(entry) {
-    const queue = [ getDep(entry) ];
+    const queue = [ getDep(entry, true) ];
 
     for (const asset of queue) {
         asset.dependencies.forEach(moduleName => {

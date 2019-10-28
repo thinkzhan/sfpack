@@ -1,0 +1,19 @@
+<template>
+    <div class="sfc">
+      <p>component-sfc</p>
+      <span>一个模块也可以以webcomponent的形式引入</span>
+    </div>
+</template>  
+<script>
+(() => {
+    let a = 'sfc...';
+    console.log(a)
+})()
+</script>
+<style>
+.sfc {  
+   p {
+        color: red
+   }
+}
+</style>
